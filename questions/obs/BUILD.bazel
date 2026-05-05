@@ -1,13 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_test")
-
-rust_library(
-    name = "obs_lib",
-    srcs = ["src/lib.rs"],
-    compile_data = ["Cargo.toml"],
-    crate_name = "obs",
-    edition = "2024",
-    visibility = ["//visibility:public"],
-)
+load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 rust_binary(
     name = "obs",
@@ -16,11 +7,4 @@ rust_binary(
     edition = "2024",
     visibility = ["//visibility:public"],
     deps = ["//lib_questions"],
-)
-
-rust_test(
-    name = "obs_lib_test",
-    compile_data = ["Cargo.toml"],
-    crate = ":obs_lib",
-    edition = "2024",
 )
