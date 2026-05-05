@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+# gazelle:rust_crates_prefix @lib_questions//:
+
+rust_library(
+    name = "lib_questions",
+    srcs = [
+        "src/lib.rs",
+        "src/span.rs",
+    ],
+    compile_data = ["Cargo.toml"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+    deps = ["@lib_questions//:serde"],
+)
+
+rust_test(
+    name = "lib_questions_test",
+    compile_data = ["Cargo.toml"],
+    crate = ":lib_questions",
+    edition = "2024",
+)

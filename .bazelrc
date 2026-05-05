@@ -1,0 +1,4 @@
+build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build --output_groups=+clippy_checks
+
+common --experimental_isolated_extension_usages

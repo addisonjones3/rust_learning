@@ -1,0 +1,32 @@
+module(
+    name = "rust_learning",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_rust", version = "0.68.1")
+bazel_dep(name = "rules_python", version = "2.0.0")
+bazel_dep(name = "gazelle", version = "0.50.0")
+
+GAZELLE_RUST_COMMIT = "62dace6f23b648f662d716723ab8eee2aab4b556"
+
+bazel_dep(name = "gazelle_rust", version = "0.1.0")
+archive_override(
+    module_name = "gazelle_rust",
+    strip_prefix = "gazelle_rust-{}".format(GAZELLE_RUST_COMMIT),
+    urls = ["https://github.com/Calsign/gazelle_rust/archive/{}.zip".format(GAZELLE_RUST_COMMIT)],
+)
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = ["1.92.0"],
+)
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.from_cargo(
+    name = "lib_questions",
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = ["//lib_questions:Cargo.toml"],
+)
+use_repo(crate, "lib_questions")
